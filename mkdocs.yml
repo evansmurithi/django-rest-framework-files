@@ -1,0 +1,11 @@
+site_name: REST framework files
+site_description: File download and upload support for Django REST framework
+
+repo_url: https://github.com/evansmurithi/django-rest-framework-files
+
+markdown_extensions:
+    - toc:
+        anchorlink: True
+
+pages:
+    - Home: 'index.md'

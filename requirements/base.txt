@@ -1,0 +1,6 @@
+-e .
+
+-r codestyle.txt
+-r docs.txt
+-r packaging.txt
+-r tests.txt
