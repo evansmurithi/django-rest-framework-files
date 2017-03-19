@@ -3,8 +3,8 @@
 
 import os
 import re
-from setuptools import setup
 
+from setuptools import setup
 
 try:
     from pypandoc import convert_file
