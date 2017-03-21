@@ -15,6 +15,17 @@ class TestDownloadListMixin(APITestCase):
         for name in names:
             ABC.objects.create(name=name)
 
+    def test_download_file_name(self):
+        """
+        Filename in viewset is the name of the file to be downloaded.
+        """
+        response = self.client.get('/def/download/?format=json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response._headers.get('content-disposition'),
+            ('content-disposition', 'attachment; filename="My file.json"')
+        )
+
     def test_download_json(self):
         """
         Response rendered in json, should output a json file when requested.
