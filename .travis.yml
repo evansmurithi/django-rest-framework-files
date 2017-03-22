@@ -33,3 +33,10 @@ script:
 after_success:
     - pip install codecov
     - codecov -e TOX_ENV
+
+deploy:
+    provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    on:
+        branch: master
