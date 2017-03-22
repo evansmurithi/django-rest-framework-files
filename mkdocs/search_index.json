@@ -1,0 +1,14 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "REST framework files",
+            "title": "Home"
+        },
+        {
+            "location": "/#rest-framework-files",
+            "text": "",
+            "title": "REST framework files"
+        }
+    ]
+}
