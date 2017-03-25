@@ -2,10 +2,10 @@ from __future__ import unicode_literals
 
 from rest_framework.test import APITestCase
 
-from .models import ABC
+from tests.test_app.models import ABC
 
 
-class TestDownloadListMixin(APITestCase):
+class TestDownloadFileMixin(APITestCase):
 
     def setUp(self):
         """
