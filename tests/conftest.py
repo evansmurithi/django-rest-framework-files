@@ -1,3 +1,6 @@
+import os
+
+
 def pytest_configure():
     from django.conf import settings
 
@@ -9,6 +12,7 @@ def pytest_configure():
     )
 
     settings.configure(
+        BASE_DIR=os.path.dirname(os.path.abspath(__file__)),
         DEBUG_PROPAGATE_EXCEPTIONS=True,
         DATABASES={
             'default': {
@@ -21,7 +25,7 @@ def pytest_configure():
         USE_I18N=True,
         USE_L10N=True,
         STATIC_URL='/static/',
-        ROOT_URLCONF='tests.urls',
+        ROOT_URLCONF='tests.test_app.urls',
         TEMPLATES=[
             {
                 'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -38,7 +42,7 @@ def pytest_configure():
             'django.contrib.staticfiles',
             'rest_framework',
             'rest_framework.authtoken',
-            'tests',
+            'tests.test_app',
         ),
         PASSWORD_HASHERS=(
             'django.contrib.auth.hashers.MD5PasswordHasher',
