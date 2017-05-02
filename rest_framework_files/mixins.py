@@ -1,23 +1,18 @@
-"""
-Upload a file and parse the content using its media type.
-"""
 from __future__ import unicode_literals
 
 import six
 
-from rest_framework.decorators import list_route
 from rest_framework.exceptions import ParseError, ValidationError
+from rest_framework.mixins import CreateModelMixin
 from rest_framework.response import Response
-from rest_framework.settings import api_settings
-from rest_framework.status import HTTP_201_CREATED
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
 
 
-class UploadFileMixin(object):
+class ImportMixin(CreateModelMixin):
     """
     Upload a file and parse its content.
     """
 
-    @list_route(methods=['post', ])
     def upload(self, request, *args, **kwargs):
         uploaded_file = request.data['file']
         content = b''
@@ -34,21 +29,42 @@ class UploadFileMixin(object):
                 continue
         else:
             raise ParseError(
-                'Could not parse content of file to any of the parsers '
-                'specified.'
+                'Could not parse content of the file to any of the parsers '
+                'provided.'
             )
 
         # create model instances from contents of the file
         serializer = self.get_serializer(data=data, many=True)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(
             data=serializer.data, status=HTTP_201_CREATED, headers=headers
         )
 
-    def get_success_headers(self, data):
-        try:
-            return {'Location': data[api_settings.URL_FIELD_NAME]}
-        except (TypeError, KeyError):
-            return {}
+
+class ExportMixin(object):
+    """
+    Download a rendered serialized response.
+    """
+
+    def download(self, request, *args, **kwargs):
+        qs = self.filter_queryset(self.get_queryset())
+        queryset = self.paginate_queryset(qs) or qs
+        serializer = self.get_serializer(queryset, many=True)
+
+        filename = "{}".format(
+            getattr(self, 'filename', self.get_view_name())
+        )
+        extension = self.get_content_negotiator().select_renderer(
+            request, self.renderer_classes
+        )[0].format
+
+        return Response(
+            data=serializer.data, status=HTTP_200_OK,
+            headers={
+                'content-disposition': (
+                    'attachment; filename="{}.{}"'.format(filename, extension)
+                )
+            }
+        )

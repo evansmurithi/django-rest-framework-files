@@ -14,7 +14,7 @@ class TestUploadFileMixin(APITestCase):
 
     def upload_file(self, filename):
         with open(self.assets_dir + filename, 'rb') as f:
-            response = self.client.post('/abc/upload/', {'file': f})
+            response = self.client.post('/abc/', {'file': f})
 
         return response
 
@@ -63,8 +63,8 @@ class TestUploadFileMixin(APITestCase):
         self.assertEqual(
             response.data['detail'],
             (
-                'Could not parse content of file to any of the '
-                'parsers specified.'
+                'Could not parse content of the file to any of the parsers '
+                'provided.'
             )
         )
         self.assertEqual(ABC.objects.count(), 0)
