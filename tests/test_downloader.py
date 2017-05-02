@@ -19,7 +19,7 @@ class TestDownloadFileMixin(APITestCase):
         """
         Filename in viewset is the name of the file to be downloaded.
         """
-        response = self.client.get('/def/download/?format=json')
+        response = self.client.get('/def/?format=json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             response._headers.get('content-disposition'),
@@ -30,7 +30,7 @@ class TestDownloadFileMixin(APITestCase):
         """
         Response rendered in json, should output a json file when requested.
         """
-        response = self.client.get('/abc/download/?format=json')
+        response = self.client.get('/abc/?format=json')
         content = (
             b'[{"id":1,"name":"me"},{"id":2,"name":"you"},'
             b'{"id":3,"name":"him"},{"id":4,"name":"her"}]'
@@ -43,14 +43,14 @@ class TestDownloadFileMixin(APITestCase):
         )
         self.assertEqual(
             response._headers.get('content-disposition'),
-            ('content-disposition', 'attachment; filename="Abc.json"')
+            ('content-disposition', 'attachment; filename="Abc List.json"')
         )
 
     def test_download_xml(self):
         """
         Response rendered in xml, should output a xml file when requested.
         """
-        response = self.client.get('/abc/download/?format=xml')
+        response = self.client.get('/abc/?format=xml')
         content = (
             b'<?xml version="1.0" encoding="utf-8"?>\n'
             b'<root><list-item><id>1</id><name>me</name></list-item>'
@@ -66,14 +66,14 @@ class TestDownloadFileMixin(APITestCase):
         )
         self.assertEqual(
             response._headers.get('content-disposition'),
-            ('content-disposition', 'attachment; filename="Abc.xml"')
+            ('content-disposition', 'attachment; filename="Abc List.xml"')
         )
 
     def test_download_csv(self):
         """
         Response rendered in csv, should output a csv file when requested.
         """
-        response = self.client.get('/abc/download/?format=csv')
+        response = self.client.get('/abc/?format=csv')
         content = b'id,name\r\n1,me\r\n2,you\r\n3,him\r\n4,her\r\n'
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, content)
@@ -83,14 +83,14 @@ class TestDownloadFileMixin(APITestCase):
         )
         self.assertEqual(
             response._headers.get('content-disposition'),
-            ('content-disposition', 'attachment; filename="Abc.csv"')
+            ('content-disposition', 'attachment; filename="Abc List.csv"')
         )
 
     def test_download_yaml(self):
         """
         Response rendered in yaml, should output a yaml file when requested.
         """
-        response = self.client.get('/abc/download/?format=yaml')
+        response = self.client.get('/abc/?format=yaml')
         content = (
             b'- id: 1\n  name: me\n- id: 2\n  name: you\n'
             b'- id: 3\n  name: him\n- id: 4\n  name: her\n'
@@ -103,5 +103,5 @@ class TestDownloadFileMixin(APITestCase):
         )
         self.assertEqual(
             response._headers.get('content-disposition'),
-            ('content-disposition', 'attachment; filename="Abc.yaml"')
+            ('content-disposition', 'attachment; filename="Abc List.yaml"')
         )

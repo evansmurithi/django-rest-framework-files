@@ -1,10 +1,10 @@
 from __future__ import unicode_literals
 
-from rest_framework import routers
+from rest_framework_files import routers
 
 from .views import ABCViewSet, DEFViewSet
 
-router = routers.SimpleRouter()
+router = routers.ImportExportRouter()
 router.register(r'abc', ABCViewSet)
 router.register(r'def', DEFViewSet)
 

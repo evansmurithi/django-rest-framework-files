@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 from rest_framework.parsers import JSONParser, MultiPartParser
 from rest_framework.renderers import JSONRenderer
-from rest_framework.viewsets import ModelViewSet
 from rest_framework_csv.parsers import CSVParser
 from rest_framework_csv.renderers import CSVRenderer
 from rest_framework_xml.parsers import XMLParser
@@ -10,14 +9,13 @@ from rest_framework_xml.renderers import XMLRenderer
 from rest_framework_yaml.parsers import YAMLParser
 from rest_framework_yaml.renderers import YAMLRenderer
 
-from rest_framework_files.downloader import DownloadFileMixin
-from rest_framework_files.uploader import UploadFileMixin
+from rest_framework_files.viewsets import ImportExportModelViewSet
 
 from .models import ABC
 from .serializers import ABCSerializer
 
 
-class ABCViewSet(UploadFileMixin, DownloadFileMixin, ModelViewSet):
+class ABCViewSet(ImportExportModelViewSet):
 
     queryset = ABC.objects.all()
     serializer_class = ABCSerializer
@@ -30,7 +28,7 @@ class ABCViewSet(UploadFileMixin, DownloadFileMixin, ModelViewSet):
     )
 
 
-class DEFViewSet(DownloadFileMixin, ModelViewSet):
+class DEFViewSet(ImportExportModelViewSet):
 
     queryset = ABC.objects.all()
     serializer_class = ABCSerializer
