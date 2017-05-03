@@ -8,7 +8,7 @@ from rest_framework.test import APITestCase
 from tests.test_app.models import ABC
 
 
-class TestUploadFileMixin(APITestCase):
+class TestImportViewsets(APITestCase):
 
     assets_dir = os.path.join(settings.BASE_DIR, 'assets/')
 

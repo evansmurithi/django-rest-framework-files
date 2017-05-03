@@ -14,7 +14,7 @@ class ImportCreateAPIView(mixins.ImportMixin, GenericAPIView):
     """
 
     def post(self, request, *args, **kwargs):
-        self.upload(request, *args, **kwargs)
+        return self.upload(request, *args, **kwargs)
 
 
 class ExportListAPIView(mixins.ExportMixin, GenericAPIView):
@@ -23,7 +23,7 @@ class ExportListAPIView(mixins.ExportMixin, GenericAPIView):
     """
 
     def get(self, request, *args, **kwargs):
-        self.download(request, *args, **kwargs)
+        return self.download(request, *args, **kwargs)
 
 
 class ExportListImportCreateAPIView(mixins.ExportMixin,
@@ -34,7 +34,7 @@ class ExportListImportCreateAPIView(mixins.ExportMixin,
     """
 
     def get(self, request, *args, **kwargs):
-        self.download(request, *args, **kwargs)
+        return self.download(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        self.upload(request, *args, **kwargs)
+        return self.upload(request, *args, **kwargs)

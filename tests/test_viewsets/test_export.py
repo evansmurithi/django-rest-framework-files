@@ -5,7 +5,7 @@ from rest_framework.test import APITestCase
 from tests.test_app.models import ABC
 
 
-class TestDownloadFileMixin(APITestCase):
+class TestExportViewsets(APITestCase):
 
     def setUp(self):
         """
