@@ -5,7 +5,7 @@ from rest_framework.test import APITestCase
 from tests.test_app.models import ABC
 
 
-class TestDownloadFileMixin(APITestCase):
+class TestExportViewsets(APITestCase):
 
     def setUp(self):
         """
@@ -24,26 +24,6 @@ class TestDownloadFileMixin(APITestCase):
         self.assertEqual(
             response._headers.get('content-disposition'),
             ('content-disposition', 'attachment; filename="My file.json"')
-        )
-
-    def test_download_using_generic_view(self):
-        """
-        Download a file using generic view.
-        """
-        response = self.client.get('/ghi/?format=yaml')
-        content = (
-            b'- id: 1\n  name: me\n- id: 2\n  name: you\n'
-            b'- id: 3\n  name: him\n- id: 4\n  name: her\n'
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content, content)
-        self.assertEqual(
-            response._headers.get('content-type'),
-            ('Content-Type', 'application/yaml; charset=utf-8')
-        )
-        self.assertEqual(
-            response._headers.get('content-disposition'),
-            ('content-disposition', 'attachment; filename="GHI.yaml"')
         )
 
     def test_download_json(self):

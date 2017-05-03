@@ -9,7 +9,9 @@ from rest_framework_xml.renderers import XMLRenderer
 from rest_framework_yaml.parsers import YAMLParser
 from rest_framework_yaml.renderers import YAMLRenderer
 
-from rest_framework_files.generics import ExportListImportCreateAPIView
+from rest_framework_files.generics import (
+    ExportListAPIView, ExportListImportCreateAPIView, ImportCreateAPIView
+)
 from rest_framework_files.viewsets import ImportExportModelViewSet
 
 from .models import ABC
@@ -45,7 +47,30 @@ class DEFViewSet(ImportExportModelViewSet):
     filename = "My file"
 
 
-class GHIImportExportView(ExportListImportCreateAPIView):
+class ABCImportView(ImportCreateAPIView):
+    """
+    Test use of import generic view.
+    """
+
+    queryset = ABC.objects.all()
+    serializer_class = ABCSerializer
+    parser_classes = (MultiPartParser, )
+    file_content_parser_classes = (CSVParser, )
+    filename = "ABC"
+
+
+class ABCExportView(ExportListAPIView):
+    """
+    Test use of export generic view.
+    """
+
+    queryset = ABC.objects.all()
+    serializer_class = ABCSerializer
+    renderer_classes = (JSONRenderer, )
+    filename = "ABC"
+
+
+class ABCImportExportView(ExportListImportCreateAPIView):
     """
     Test use of generic views.
     """
@@ -53,10 +78,6 @@ class GHIImportExportView(ExportListImportCreateAPIView):
     queryset = ABC.objects.all()
     serializer_class = ABCSerializer
     parser_classes = (MultiPartParser, )
-    renderer_classes = (
-        JSONRenderer, XMLRenderer, CSVRenderer, YAMLRenderer,
-    )
-    file_content_parser_classes = (
-        JSONParser, XMLParser, YAMLParser, CSVParser,
-    )
-    filename = "GHI"
+    renderer_classes = (YAMLRenderer, )
+    file_content_parser_classes = (XMLParser, )
+    filename = "ABC"

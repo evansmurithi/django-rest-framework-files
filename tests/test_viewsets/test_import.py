@@ -8,24 +8,15 @@ from rest_framework.test import APITestCase
 from tests.test_app.models import ABC
 
 
-class TestUploadFileMixin(APITestCase):
+class TestImportViewsets(APITestCase):
 
     assets_dir = os.path.join(settings.BASE_DIR, 'assets/')
 
-    def upload_file(self, filename, url='/abc/'):
+    def upload_file(self, filename):
         with open(self.assets_dir + filename, 'rb') as f:
-            response = self.client.post(url, {'file': f})
+            response = self.client.post('/abc/', {'file': f})
 
         return response
-
-    def test_upload_using_generic_view(self):
-        """
-        Upload a file and create model instances using generic view.
-        """
-        response = self.upload_file('abc.xml', '/ghi/')
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(ABC.objects.count(), 2)
-        self.assertTrue(ABC.objects.filter(name='cheetah').exists())
 
     def test_upload_json_file(self):
         """
