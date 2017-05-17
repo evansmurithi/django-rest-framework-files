@@ -15,6 +15,7 @@ class ImportMixin(CreateModelMixin):
 
     def upload(self, request, *args, **kwargs):
         uploaded_file = request.data['file']
+
         content = b''
         for chunk in uploaded_file.chunks():
             content += chunk
@@ -53,9 +54,7 @@ class ExportMixin(object):
         queryset = self.paginate_queryset(qs) or qs
         serializer = self.get_serializer(queryset, many=True)
 
-        filename = "{}".format(
-            getattr(self, 'filename', self.get_view_name())
-        )
+        filename = getattr(self, 'filename', self.get_view_name())
         extension = self.get_content_negotiator().select_renderer(
             request, self.renderer_classes
         )[0].format
