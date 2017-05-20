@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import six
 
+from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework.exceptions import ParseError, ValidationError
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.response import Response
@@ -14,7 +15,10 @@ class ImportMixin(CreateModelMixin):
     """
 
     def upload(self, request, *args, **kwargs):
-        uploaded_file = request.data['file']
+        try:
+            uploaded_file = request.data['file']
+        except MultiValueDictKeyError:
+            raise MultiValueDictKeyError("Upload a file with the key 'file'")
 
         content = b''
         for chunk in uploaded_file.chunks():
