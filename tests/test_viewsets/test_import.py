@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import os
 
 from django.conf import settings
+from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework.test import APITestCase
 
 from tests.test_app.models import ABC
@@ -17,6 +18,17 @@ class TestImportViewsets(APITestCase):
             response = self.client.post('/abc/', {'file': f})
 
         return response
+
+    def test_upload_with_wrong_key(self):
+        """
+        Should throw error while uploading with wrong key
+        """
+        with open(self.assets_dir + 'abc.json', 'rb') as f, \
+                self.assertRaises(MultiValueDictKeyError) as err:
+            self.client.post('/abc/', {'wrong_key': f})
+        self.assertIn(
+            "Upload a file with the key 'file'", err.exception.args
+        )
 
     def test_upload_json_file(self):
         """
