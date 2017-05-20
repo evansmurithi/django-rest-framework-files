@@ -21,8 +21,6 @@ matrix:
     include:
         - python: "2.7"
           env: TOX_ENV="lint"
-        - python: "2.7"
-          env: TOX_ENV="docs"
 
 install:
     - pip install tox-travis
