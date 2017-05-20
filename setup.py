@@ -55,7 +55,7 @@ setup(
     packages=get_packages(package),
     install_requires=[],
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Framework :: Django :: 1.8',
