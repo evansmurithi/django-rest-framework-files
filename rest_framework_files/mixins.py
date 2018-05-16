@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 import six
-
 from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework.exceptions import ParseError, ValidationError
 from rest_framework.mixins import CreateModelMixin
