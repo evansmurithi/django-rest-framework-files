@@ -14,8 +14,8 @@ also allows creation of model instances by uploading a file containing the model
 
 # Requirements
 
-* Python (2.7, 3.5)
-* Django REST framework (3.4, 3.6)
+* Python (2.7, 3.5, 3.6)
+* Django REST framework (3.4, 3.5, 3.6, 3.7, 3.8)
 
 # Installation
 
