@@ -72,7 +72,7 @@ Some third party packages that offer media type support:
 
 *urls.py*
 ```python
-from rest_framework import routers
+from rest_framework_files import routers
 
 from .views import ABCViewSet
 
